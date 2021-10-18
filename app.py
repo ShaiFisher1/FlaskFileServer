@@ -11,24 +11,38 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@app.route('/files', methods=['POST',])
+@app.route('/files', methods=['POST'])
 def upload_file():
     next_id = get_largest_id_number() + 1
     save_path = os.path.join(UPLOADS_FOLDER, str(next_id))
+    file = request.files['file']
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    file = request.files['file']
     file.save(os.path.join(save_path, file.filename))
     return f"The id of the file is {next_id}"
 
 
+@app.route('/files', methods=['GET'])
+def get_files():
+    files_dict = {}
+    if len(os.listdir(UPLOADS_FOLDER)) != 0:
+        for folder in os.listdir(UPLOADS_FOLDER):
+            num = str(folder)
+            file_path = os.path.join(UPLOADS_FOLDER, num)
+            file_name = str(os.listdir(file_path)[0])
+            files_dict[num] = file_name
+        return jsonify(files_dict)
+    else:
+        return "There are no files"
 
 
 @app.route('/files/<name>')
 def get_file(name):
     try:
-        file_path = os.path.join(UPLOADS_FOLDER, str(name)) # adds the id given to the path
-        file_name = os.listdir(file_path)[0] # there is only one file in each dir
+        file_path = os.path.join(UPLOADS_FOLDER,
+                                 str(name))  # adds the id given to the path
+        file_name = os.listdir(file_path)[
+            0]  # there is only one file in each dir
         return send_from_directory(file_path, file_name,
                                    as_attachment=True)
     except FileNotFoundError:
@@ -47,4 +61,4 @@ def get_largest_id_number(folder=UPLOADS_FOLDER):
 
 
 if __name__ == '__main__':
-  app.run()
+    app.run()
