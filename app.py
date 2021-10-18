@@ -38,7 +38,7 @@ def get_files_list():
         return "There are no files"
 
 
-@app.route('/files/lala/<name>')
+@app.route('/files/lala/<name>', methods=['PUT'])
 def update_file(name):
     try:
         file_path = os.path.join(UPLOADS_FOLDER,
@@ -46,6 +46,8 @@ def update_file(name):
         file_name = os.listdir(file_path)[
             0]  # there is only one file in each dir
         os.remove(os.path.join(file_path, file_name))
+        file = request.files['file']
+        file.save(os.path.join(file_path, file.filename))
 
     except FileNotFoundError:
         return f'file with the id number: {name} not found and therefore cannot be updated', 404
