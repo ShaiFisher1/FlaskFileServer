@@ -11,7 +11,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-@app.route('/files', methods=['POST'])
+@app.route('/files', methods=['POST',])
 def upload_file():
     next_id = get_largest_id_number() + 1
     save_path = os.path.join(UPLOADS_FOLDER, str(next_id))
@@ -22,13 +22,17 @@ def upload_file():
     return f"The id of the file is {next_id}"
 
 
+
+
 @app.route('/files/<name>')
 def get_file(name):
     try:
-        return send_from_directory(UPLOADS_FOLDER, name,
+        file_path = os.path.join(UPLOADS_FOLDER, str(name)) # adds the id given to the path
+        file_name = os.listdir(file_path)[0] # there is only one file in each dir
+        return send_from_directory(file_path, file_name,
                                    as_attachment=True)
     except FileNotFoundError:
-        return f'file not found: {name}', 404
+        return f'file with the id number: {name} not found', 404
 
 
 def get_largest_id_number(folder=UPLOADS_FOLDER):
@@ -43,4 +47,4 @@ def get_largest_id_number(folder=UPLOADS_FOLDER):
 
 
 if __name__ == '__main__':
-    app.run()
+  app.run()
