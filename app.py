@@ -11,6 +11,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+# uploads a file and gets its id back
 @app.route('/files', methods=['POST'])
 def upload_file():
     next_id = get_largest_id_number() + 1
@@ -19,11 +20,12 @@ def upload_file():
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     file.save(os.path.join(save_path, file.filename))
-    return f"The id of the file is {next_id}"
+    return f"The file uploaded, The id of the file is {next_id}"
 
 
+# gets all the files in a list
 @app.route('/files', methods=['GET'])
-def get_files():
+def get_files_list():
     files_dict = {}
     if len(os.listdir(UPLOADS_FOLDER)) != 0:
         for folder in os.listdir(UPLOADS_FOLDER):
@@ -36,6 +38,7 @@ def get_files():
         return "There are no files"
 
 
+# gets a number and returns the file
 @app.route('/files/<name>')
 def get_file(name):
     try:
