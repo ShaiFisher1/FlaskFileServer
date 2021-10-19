@@ -7,7 +7,9 @@ from flask import Flask, request, jsonify, make_response, send_from_directory, \
 
 UPLOADS_FOLDER = "C:\\Users\\adifi\\Desktop\\uploads_folder"
 app = Flask(__name__)
-import views
+from views import test
+
+app.add_url_rule('/upload_file', '', test)
 
 # app.register_blueprint(second, url_prefix="")
 
