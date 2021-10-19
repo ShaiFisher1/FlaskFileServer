@@ -1,10 +1,11 @@
 import os
 
 from flask import Flask, request, jsonify, make_response, send_from_directory, render_template
+from second import second
 
 UPLOADS_FOLDER = "C:\\Users\\adifi\\Desktop\\uploads_folder"
 app = Flask(__name__)
-
+app.register_blueprint(second, url_prefix="")
 
 @app.route("/")
 def home():
