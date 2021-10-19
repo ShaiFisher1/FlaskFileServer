@@ -13,8 +13,13 @@
         <strong>
             <nav>
                 <ul class="menu">
-                    <li><a href="{{ url_for('home') }}">Home</a></li>
-                    <li><a href="{{ url_for('upload_file') }}">Upload File</a></li>
+                    <li><a href="http://127.0.0.1:5000/">Home</a></li>
+                    <li><a href="{{ url_for('test') }}">Upload File</a></li>
+                    <li><a href="http://127.0.0.1:5000/api/v1/files/<file_id>">Update File</a></li>
+                    <li><a href="http://127.0.0.1:5000/api/v2/files/<file_id>">Get File</a></li>
+                    <li><a href="http://127.0.0.1:5000/">Get Files</a></li>
+
+
                 </ul>
             </nav>
         </strong>

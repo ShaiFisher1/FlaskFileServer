@@ -1,30 +1,15 @@
 import os
 
-from flask import Flask, request, jsonify, make_response, send_from_directory, render_template
-from second import second
+from flask import Flask, request, jsonify, make_response, send_from_directory, \
+    render_template
+
+# from second import second
 
 UPLOADS_FOLDER = "C:\\Users\\adifi\\Desktop\\uploads_folder"
 app = Flask(__name__)
-app.register_blueprint(second, url_prefix="")
+import views
 
-@app.route("/")
-def home():
-    return render_template("home.html")
-
-
-# uploads a file and gets its id back
-@app.route('/files', methods=['POST'])
-def upload_file():
-    next_id = get_largest_id_number() + 1
-    save_path = os.path.join(UPLOADS_FOLDER, str(next_id))
-    file = request.files['file']
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
-    file.save(os.path.join(save_path, file.filename))
-    msg = f"The file uploaded, The id of the file is {next_id}"
-  #  return f"The file uploaded, The id of the file is {next_id}"
-    return render_template("upload_file.html")
-
+# app.register_blueprint(second, url_prefix="")
 
 # gets all the files in a list todo globe pattern matching
 
@@ -42,12 +27,34 @@ def get_files_list():
         return "There are no files"
 
 
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+
+# todo make GET for the urls in order to load their basic html file that
+# todo we will be able to load a form to perform an POST or PUT
+# uploads a file and gets its id back
+@app.route('/api/v1/files', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        next_id = get_largest_id_number() + 1
+        save_path = os.path.join(UPLOADS_FOLDER, str(next_id))
+        file = request.files['file']
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    file.save(os.path.join(save_path, file.filename))
+    return f"The file uploaded, The id of the file is {next_id}"
+
+
+# gets all the files in a list todo globe pattern matching
+
 # todo not working when sending the id as key
-@app.route('/files/<id>', methods=['PUT'])
-def update_file(id):
+@app.route('/api/v1/files/<file_id>', methods=['PUT'])
+def update_file(file_id):
     try:
         file_path = os.path.join(UPLOADS_FOLDER,
-                                 str(id))  # adds the id given to the path
+                                 str(file_id))  # adds the id given to the path
         file_name = os.listdir(file_path)[
             0]  # there is only one file in each dir
         os.remove(os.path.join(file_path, file_name))
@@ -55,21 +62,21 @@ def update_file(id):
         file.save(os.path.join(file_path, file.filename))
 
     except FileNotFoundError:
-        return f'file with the id number: {id} not found and therefore cannot be updated', 404
+        return f'file with the id number: {file_id} not found and therefore cannot be updated', 404
 
 
-# gets a number and returns the file
-@app.route('/files/<id>')
-def get_file(id):
+# gets a number and returns the file METHODS????????
+@app.route('/api/v2/files/<file_id>', methods=['POST'])
+def get_file(file_id):
     try:
         file_path = os.path.join(UPLOADS_FOLDER,
-                                 str(id))  # adds the id given to the path
+                                 str(file_id))  # adds the id given to the path
         file_name = os.listdir(file_path)[
             0]  # there is only one file in each dir
         return send_from_directory(file_path, file_name,
                                    as_attachment=True)
     except FileNotFoundError:
-        return f'file with the id number: {id} not found', 404
+        return f'file with the id number: {file_id} not found', 404
 
 
 def get_largest_id_number(folder=UPLOADS_FOLDER):
@@ -84,4 +91,4 @@ def get_largest_id_number(folder=UPLOADS_FOLDER):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
