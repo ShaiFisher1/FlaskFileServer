@@ -1,14 +1,14 @@
 import os
 
-from flask import Flask, request, jsonify, make_response, send_from_directory
+from flask import Flask, request, jsonify, make_response, send_from_directory, render_template
 
 UPLOADS_FOLDER = "C:\\Users\\adifi\\Desktop\\uploads_folder"
 app = Flask(__name__)
 
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def home():
+    return render_template("home.html")
 
 
 # uploads a file and gets its id back
@@ -20,10 +20,13 @@ def upload_file():
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     file.save(os.path.join(save_path, file.filename))
-    return f"The file uploaded, The id of the file is {next_id}"
+    msg = f"The file uploaded, The id of the file is {next_id}"
+  #  return f"The file uploaded, The id of the file is {next_id}"
+    return render_template("upload_file.html")
 
 
-# gets all the files in a list
+# gets all the files in a list todo globe pattern matching
+
 @app.route('/files', methods=['GET'])
 def get_files_list():
     files_dict = {}
@@ -38,11 +41,12 @@ def get_files_list():
         return "There are no files"
 
 
-@app.route('/files/lala/<name>', methods=['PUT'])
-def update_file(name):
+# todo not working when sending the id as key
+@app.route('/files/<id>', methods=['PUT'])
+def update_file(id):
     try:
         file_path = os.path.join(UPLOADS_FOLDER,
-                                 str(name))  # adds the id given to the path
+                                 str(id))  # adds the id given to the path
         file_name = os.listdir(file_path)[
             0]  # there is only one file in each dir
         os.remove(os.path.join(file_path, file_name))
@@ -50,21 +54,21 @@ def update_file(name):
         file.save(os.path.join(file_path, file.filename))
 
     except FileNotFoundError:
-        return f'file with the id number: {name} not found and therefore cannot be updated', 404
+        return f'file with the id number: {id} not found and therefore cannot be updated', 404
 
 
 # gets a number and returns the file
-@app.route('/files/<name>')
-def get_file(name):
+@app.route('/files/<id>')
+def get_file(id):
     try:
         file_path = os.path.join(UPLOADS_FOLDER,
-                                 str(name))  # adds the id given to the path
+                                 str(id))  # adds the id given to the path
         file_name = os.listdir(file_path)[
             0]  # there is only one file in each dir
         return send_from_directory(file_path, file_name,
                                    as_attachment=True)
     except FileNotFoundError:
-        return f'file with the id number: {name} not found', 404
+        return f'file with the id number: {id} not found', 404
 
 
 def get_largest_id_number(folder=UPLOADS_FOLDER):
