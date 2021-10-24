@@ -7,15 +7,20 @@ from flask import Flask, request, jsonify, make_response, send_from_directory, \
 
 UPLOADS_FOLDER = "C:\\Users\\adifi\\Desktop\\uploads_folder"
 app = Flask(__name__)
-from views import test
+from views import upload_file_page, show_all_files_page
+# ------------------ only views (all html pages) ----------
+# todo understant the purpose of the second parameter.
+app.add_url_rule('/upload_file', '', upload_file_page, methods=['GET'])
+# ----------------- end views only --------------
 
-app.add_url_rule('/upload_file', '', test)
+
+# todo add_url_rule for views (which are just pages)
+#  make sure all rest api requests are /api/v1
 
 # app.register_blueprint(second, url_prefix="")
 
-# gets all the files in a list todo globe pattern matching
 
-@app.route('/files', methods=['GET'])
+@app.route('/api/v1/files', methods=['GET'])
 def get_files_list():
     files_dict = {}
     if len(os.listdir(UPLOADS_FOLDER)) != 0:
@@ -34,8 +39,6 @@ def home():
     return render_template("home.html")
 
 
-# todo make GET for the urls in order to load their basic html file that
-# todo we will be able to load a form to perform an POST or PUT
 # uploads a file and gets its id back
 @app.route('/api/v1/files', methods=['POST'])
 def upload_file():
@@ -43,15 +46,13 @@ def upload_file():
         next_id = get_largest_id_number() + 1
         save_path = os.path.join(UPLOADS_FOLDER, str(next_id))
         file = request.files['file']
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
-    file.save(os.path.join(save_path, file.filename))
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+        file.save(os.path.join(save_path, file.filename))
     return f"The file uploaded, The id of the file is {next_id}"
 
 
-# gets all the files in a list todo globe pattern matching
 
-# todo not working when sending the id as key
 @app.route('/api/v1/files/<file_id>', methods=['PUT'])
 def update_file(file_id):
     try:
