@@ -3,14 +3,16 @@ import os
 from flask import Flask, request, jsonify, make_response, send_from_directory, \
     render_template
 
-# from second import second
-
 UPLOADS_FOLDER = "C:\\Users\\adifi\\Desktop\\uploads_folder"
 app = Flask(__name__)
-from views import upload_file_page, show_all_files_page
+from views import upload_file_page, show_all_files_page, update_file_page, get_file_by_num_page
 # ------------------ only views (all html pages) ----------
-# todo understant the purpose of the second parameter.
-app.add_url_rule('/upload_file', '', upload_file_page, methods=['GET'])
+# todo understand the purpose of the second parameter.
+app.add_url_rule('/show_all_files', '', show_all_files_page, methods=['GET'])
+#app.add_url_rule('/upload_file', '', upload_file_page, methods=['GET'])
+#app.add_url_rule('/update_file', '', update_file_page(), methods=['GET'])
+#app.add_url_rule('/get_file', '', get_file_by_num_page(), methods=['GET'])
+
 # ----------------- end views only --------------
 
 
@@ -68,7 +70,7 @@ def update_file(file_id):
         return f'file with the id number: {file_id} not found and therefore cannot be updated', 404
 
 
-# gets a number and returns the file METHODS????????
+# todo why v2?
 @app.route('/api/v2/files/<file_id>', methods=['POST'])
 def get_file(file_id):
     try:

@@ -1,0 +1,18 @@
+<!--<form action="/api/v1/files" method="GET">-->
+
+
+<!--  <div>-->
+<!--    <button>Get all files</button>-->
+<!--  </div>-->
+<!--</form>-->
+
+<style>
+  .hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+</style>
+
+<iframe name="hiddenFrame" class="hide"></iframe>
+
+<form action="receiver.pl" method="post" target="hiddenFrame">
+  <input name="signed" type="checkbox">
+  <input value="Save" type="submit">
+</form>
