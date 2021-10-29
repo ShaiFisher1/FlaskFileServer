@@ -5,7 +5,6 @@ from flask import jsonify, send_from_directory
 
 UPLOADS_FOLDER = "C:\\Users\\adifi\\Desktop\\uploads_folder"
 
-
 def get_files_list_manager():
     files_dict = {}
     if len(os.listdir(UPLOADS_FOLDER)) != 0:
@@ -17,7 +16,6 @@ def get_files_list_manager():
         return jsonify(files_dict)
     else:
         return "There are no files"
-
 
 def upload_file_manager(file):
     next_id = get_largest_id_number() + 1
