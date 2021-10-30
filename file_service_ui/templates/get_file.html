@@ -12,11 +12,13 @@
 <body>
     <form class="cardsData" id="cardsForm">
         <input type="text" placeholder="File Number" id="fileNumber" required minlength="0">
-        <input id="submit" type="submit">
+        <input id="submit" type="submit" >
     </form>
-    <script type="text/javascript" src="{{url_for('static', filename='cards.js')}}">
+    <iframe id="my_iframe" style="display:none;"></iframe>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script type="text/javascript" src="{{url_for('static', filename='cards.js')}}"></script> -->
+    <script type="module" src="../static/get_file.js"></script>
 
-    </script>
 </body>
 
 </html>

@@ -32,3 +32,12 @@ def get_file():
 def update_file():
     print("in update file html")
     return render_template("update_file.html")
+
+@views.route("/upload_file")
+def upload_file():
+    print("in upload file html")
+    return render_template("upload_file.html")
+
+
+# Todo - i suggest you will do the last one as "delete file", like CRUD. if you will do it by yourself you will understand all the thinkg I did.
+# If you want to keep the "Get all files" you can but tell me how you want it to look in the ui. 

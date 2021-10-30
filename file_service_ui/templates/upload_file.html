@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Upload file</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>action</title>
+    <link rel="stylesheet">
 </head>
+
 <body>
-{% extends "template.html" %}
-{% block content %}
-<h1> Upload file page </h1>
-<p> Flask is a micro web framework written in Python.</p>
-<p> Applications that use the Flask framework include Pinterest,
-    LinkedIn, and the community web page for Flask itself.</p>
-{% endblock %}
-// todo submit form
-// todo send to /api/v1/files - post with the file.
+    <form id="myForm" >
+       <input type="file" id="inpFile"><br>
+       <button type="submit">upload File</button>
+    </form>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../static/upload_file.js"></script>
 </body>
+
 </html>

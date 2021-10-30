@@ -3,7 +3,7 @@ import os
 # from manager import get_files_list_manager, upload_file_manager, \
 #     update_file_manager, get_file_by_id_manager
 
-from .manager import get_files_list_manager, upload_file_manager, \
+from manager import get_files_list_manager, upload_file_manager, \
     update_file_manager, get_file_by_id_manager
 
 from flask import Flask, request, jsonify, make_response, send_from_directory, \
