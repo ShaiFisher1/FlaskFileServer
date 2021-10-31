@@ -14,18 +14,13 @@
 <body>
     <div class="dateContainer"></div>
     <div class="changePagesContainer">
+        <p1>Welcome to my File Server</p1>
         <a class="pagesButton" href="get_file"><button>Get File</button></a>
         <a class="pagesButton" href="update_file"><button>update File</button></a>
         <a class="pagesButton" href="upload_file"><button>upload File</button></a>
+        <a class="pagesButton" href="get_all_files"><button>get all Files</button></a>
     </div>
     <script>
-        const SECOND_IN_MILLISECOND = 1000;
-        function time() {
-            const currentDate = new Date();
-            document.getElementsByClassName("dateContainer")[0].innerHTML = currentDate.getDate() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
-        }
-        time();
-        setInterval(time, SECOND_IN_MILLISECOND);
     </script>
 </body>
 
