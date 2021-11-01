@@ -1,4 +1,6 @@
 from flask import Flask
+
+# import of the Blueprint
 from views import views
 
 app = Flask(__name__)
