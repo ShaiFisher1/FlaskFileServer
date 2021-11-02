@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cards</title>
+    <link rel="stylesheet">
+
+</head>
+
+<body>
+    <form id="allfiles">
+        <input id="submit" type="submit" value="get all files">
+    </form>
+
+    <!-- instead of npm insatlling, including it from a cdn -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script type="text/javascript" src="{{url_for('static', filename='cards.js')}}"></script> -->
+    <script type="module" src="../static/get_all_files.js"></script>
+
+    <!--Shai added-->
+    <a class="pagesButton" href="http://127.0.0.1:5000/"><button>Back to Home</button></a>
+
+</body>
+
+</html>

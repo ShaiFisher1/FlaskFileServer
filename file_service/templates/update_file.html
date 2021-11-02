@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>action</title>
+    <link rel="stylesheet">
+</head>
+
+<body>
+    <form id="myForm" >
+        <input type="text" placeholder="File Number" id="fileNumber" required minlength="0">
+       <input type="file" id="inpFile" required ><br>
+       <button type="submit">update File</button>
+    </form>
+
+    <!--instead of installing, including axios by using external CDN-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../static/update_file.js"></script>
+
+    <!--Shai added-->
+    <a class="pagesButton" href="http://127.0.0.1:5000/"><button>Back to Home</button></a>
+
+</body>
+
+</html>
